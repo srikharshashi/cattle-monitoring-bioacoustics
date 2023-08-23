@@ -1,4 +1,4 @@
-# cattle_plus
+# cattleplus
 
 A new Flutter project.
 
