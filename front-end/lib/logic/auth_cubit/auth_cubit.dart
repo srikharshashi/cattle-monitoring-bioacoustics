@@ -13,11 +13,7 @@ class AuthCubit extends Cubit<AuthState> {
   void login(String email) async {
     box.put("email", email);
     // var deviceToken = await FirebaseMessaging.instance.getToken();
-    await FirebaseFirestore.instance.collection('Users').doc(email).set({
-      'email': email,
-      'createdAt': DateTime.now().toString(),
-      // 'deviceToken': deviceToken
-    });
+    
     emit(Authenticated(email: email));
   }
 

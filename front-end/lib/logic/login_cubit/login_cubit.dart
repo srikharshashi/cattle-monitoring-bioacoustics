@@ -32,8 +32,22 @@ class LoginCubit extends Cubit<LoginState> {
         final UserCredential userCredential =
             await auth.signInWithCredential(credential);
         user = userCredential.user;
+        String email = user!.email ?? "dasojusrikhar@gmail.com";
         //check if user exists else get phonenumber
-        emit(LoginSuccess());
+        bool ans = await checkUser(email);
+        if (!ans) {
+          emit(LoginGetPhone(email: email));
+        } else {
+          await FirebaseFirestore.instance
+              .collection('Users')
+              .doc(email)
+              .update({
+            'email': email,
+            'createdAt': DateTime.now().toString(),
+            'deviceToken': 'fakeToken'
+          });
+          emit(LoginSuccess(email: user!.email ?? "dasojusrikhar@gmail.com"));
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           emit(LoginError(message: "account-exists-with-different-credential"));
@@ -46,16 +60,31 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<bool> checkUser() async{
+  Future<bool> checkUser(String email) async {
     try {
-      FirebaseFirestore.collection('users').doc('id')
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('Users');
+      QuerySnapshot ss = await users.where('email', isEqualTo: email).get();
+      print(ss.docs.length);
+      return ss.docs.length > 0;
     } catch (e) {
-      
+      print(e.toString());
     }
-
+    return false;
   }
 
   void reload() {
     emit(LoginInitial());
+  }
+
+  void setPhone(String email, String phoneno) async {
+    emit(LoginLoad());
+    await FirebaseFirestore.instance.collection('Users').doc(email).set({
+      'email': email,
+      'createdAt': DateTime.now().toString(),
+      'deviceToken': 'fakeToken',
+      'phoneno': "91" + phoneno
+    });
+    emit(LoginSuccess(email: email));
   }
 }

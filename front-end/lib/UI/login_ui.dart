@@ -87,7 +87,11 @@ class _LoginUIState extends State<LoginUI> {
             padding: const EdgeInsets.all(20.0),
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
-                // TODO: implement listener
+                if (state is LoginSuccess) {
+                  context.read<AuthCubit>().login(state.email);
+                  context.read<HomeCubit>().load_home(state.email);
+                  Navigator.pushReplacementNamed(context, Routes.HOME);
+                }
               },
               builder: (context, state) {
                 if (state is LoginInitial) {
@@ -132,15 +136,17 @@ class _LoginUIState extends State<LoginUI> {
                         TextField(
                           controller: tdc,
                         ),
+                        SizedBox(
+                          height: 20,
+                        ),
                         ElevatedButton(
                             onPressed: () {
-                              RegExp indianPhoneNumberRegex =
-                                  RegExp(r'^\+?91?[6-9]\d{9}$');
-                              if (tdc.text.length != 10 ||
-                                  !indianPhoneNumberRegex.hasMatch(tdc.text))
+                              if (tdc.text.length != 10)
                                 showToast("Invalid phone number");
                               else {
-                                // context.read<LoginCubit>().;
+                                context
+                                    .read<LoginCubit>()
+                                    .setPhone(state.email, tdc.text);
                               }
                             },
                             child: Text("Add Phone number"))

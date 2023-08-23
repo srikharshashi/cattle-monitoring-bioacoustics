@@ -7,9 +7,16 @@ final class LoginInitial extends LoginState {}
 
 class LoginLoad extends LoginState {}
 
-class LoginGetPhone extends LoginState {}
+class LoginGetPhone extends LoginState {
+  String email;
+  LoginGetPhone({required this.email});
+}
 
-class LoginSuccess extends LoginState {}
+class LoginSuccess extends LoginState {
+  String email;
+  LoginSuccess({required this.email});
+
+}
 
 class LoginError extends LoginState {
   String message;

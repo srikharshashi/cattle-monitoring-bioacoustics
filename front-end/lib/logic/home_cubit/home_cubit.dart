@@ -16,16 +16,16 @@ class HomeCubit extends Cubit<HomeState> {
       QuerySnapshot ss = await cattle.where('userId', isEqualTo: email).get();
       List<Map<String, dynamic>> cattle_list =
           ss.docs.map((e) => e.data() as Map<String, dynamic>).toList();
-      ss.docs.forEach((element) {
-        print(cattle_list);
-        emit(HomeLoaded(cattle_list: cattle_list));
-      });
+      for (var element in ss.docs) {
+        print(element.id);
+      }
+      emit(HomeLoaded(cattle_list: cattle_list));
     } catch (e) {
       emit(HomeError());
     }
   }
+
   Future<void> refresh_home() async {
-    
     emit(HomeLoad());
     try {
       CollectionReference cattle =
@@ -33,10 +33,8 @@ class HomeCubit extends Cubit<HomeState> {
       QuerySnapshot ss = await cattle.where('userId', isEqualTo: oemail).get();
       List<Map<String, dynamic>> cattle_list =
           ss.docs.map((e) => e.data() as Map<String, dynamic>).toList();
-      ss.docs.forEach((element) {
-        print(cattle_list);
-        emit(HomeLoaded(cattle_list: cattle_list));
-      });
+
+      emit(HomeLoaded(cattle_list: cattle_list));
     } catch (e) {
       emit(HomeError());
     }
