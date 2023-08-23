@@ -19,7 +19,7 @@ def create_app():
     app = Flask(__name__)
     try:
         cred = credentials.Certificate(config.CERTIFICATE_PATH)
-        firebase_admin.initialize_app(cred)
+        firebase_admin.initialize_app(cred , {'storageBucket': 'gs://cattle-plus.appspot.com'})
         db = firestore.client()
         config.db = db
 
