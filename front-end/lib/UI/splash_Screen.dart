@@ -1,3 +1,4 @@
+import 'package:cattleplus/UI/home.dart';
 import 'package:cattleplus/logic/auth_cubit/auth_cubit.dart';
 import 'package:cattleplus/logic/home_cubit/home_cubit.dart';
 import 'package:cattleplus/logic/splash_screencubit/splash_screen_cubit.dart';
@@ -22,8 +23,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   @override
-  
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SplashScreenCubit, SplashScreenState>(
@@ -43,7 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (state is LoggedIn) {
         context.read<AuthCubit>().login(state.email);
         context.read<HomeCubit>().load_home(state.email);
-        Navigator.pushReplacementNamed(context, Routes.HOME);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Home(email: state.email)));
       } else if (state is LoggedOut) {
         Navigator.pushReplacementNamed(context, Routes.LOGIN);
       }

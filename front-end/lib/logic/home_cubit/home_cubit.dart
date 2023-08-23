@@ -14,11 +14,12 @@ class HomeCubit extends Cubit<HomeState> {
       CollectionReference cattle =
           FirebaseFirestore.instance.collection('catteles');
       QuerySnapshot ss = await cattle.where('userId', isEqualTo: email).get();
-      List<Map<String, dynamic>> cattle_list =
-          ss.docs.map((e) => e.data() as Map<String, dynamic>).toList();
-      for (var element in ss.docs) {
-        print(element.id);
-      }
+      List<Map<String, dynamic>> cattle_list = [];
+      ss.docs.forEach((doc) {
+        Map<String, dynamic> cattleData = doc.data() as Map<String, dynamic>;
+        cattleData['documentId'] = doc.id; // Add the document ID to the map
+        cattle_list.add(cattleData);
+      });
       emit(HomeLoaded(cattle_list: cattle_list));
     } catch (e) {
       emit(HomeError());

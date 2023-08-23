@@ -10,8 +10,6 @@ class AppRouter {
     switch (routeSettings.name) {
       case Routes.SPLASH:
         return MaterialPageRoute(builder: (context) => SplashScreen());
-      case Routes.HOME || "/notification-page":
-        return MaterialPageRoute(builder: (context) => Home());
       case Routes.LOGIN:
         return MaterialPageRoute(builder: (context) => LoginUI());
       // case Routes.ADD_CATTLE:

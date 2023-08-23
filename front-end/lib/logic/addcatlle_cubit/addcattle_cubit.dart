@@ -7,7 +7,8 @@ part 'addcattle_state.dart';
 class AddcattleCubit extends Cubit<AddcattleState> {
   AddcattleCubit() : super(AddcattleInitial());
 
-  void addCattle(String email, String name, String type) async {
+  void addCattle(
+      String email, String name, String type, String deviceID) async {
     emit(AddCattleLoad());
     try {
       var db = FirebaseFirestore.instance;
@@ -17,9 +18,9 @@ class AddcattleCubit extends Cubit<AddcattleState> {
         "userId": email,
         "createdAt": Timestamp.now(),
         "history": [],
-        "lastState":"unknown"
+        "lastState": "unknown"
       };
-      await db.collection('catteles').add(data);
+      await db.collection('catteles').doc(deviceID).set(data);
       emit(AddCattleSuccess());
     } catch (e) {
       emit(AddCattleError());

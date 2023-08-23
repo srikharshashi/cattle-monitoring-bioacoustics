@@ -1,5 +1,8 @@
+import 'package:cattleplus/UI/home.dart';
 import 'package:cattleplus/logic/auth_cubit/auth_cubit.dart';
 import 'package:cattleplus/logic/home_cubit/home_cubit.dart';
+import 'package:cattleplus/logic/localize_cubit/localize_cubit.dart';
+import 'package:cattleplus/logic/localize_cubit/strings.dart';
 import 'package:cattleplus/logic/login_cubit/login_cubit.dart';
 import 'package:cattleplus/logic/splash_screencubit/splash_screen_cubit.dart';
 import 'package:cattleplus/routing/routes.dart';
@@ -75,7 +78,10 @@ class _LoginUIState extends State<LoginUI> {
       listener: (context, state) {
         // print(state);
         if (state is Authenticated) {
-          Navigator.pushReplacementNamed(context, Routes.HOME);
+          Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(email: state.email)));
         }
       },
       child: Scaffold(
@@ -85,88 +91,101 @@ class _LoginUIState extends State<LoginUI> {
         body: Container(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: BlocConsumer<LoginCubit, LoginState>(
-              listener: (context, state) {
-                if (state is LoginSuccess) {
-                  context.read<AuthCubit>().login(state.email);
-                  context.read<HomeCubit>().load_home(state.email);
-                  Navigator.pushReplacementNamed(context, Routes.HOME);
-                }
-              },
-              builder: (context, state) {
-                if (state is LoginInitial) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Image.asset('assets/logo.png'),
-                      SizedBox(
-                        width: 210,
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              context
-                                  .read<LoginCubit>()
-                                  .signInWithGoogle(context: context);
-                            },
-                            child: Row(
-                              children: [
-                                Text(
-                                  "Sign In With Google  ",
-                                  style: TextStyle(fontWeight: FontWeight.w800),
-                                ),
-                                Icon(FontAwesomeIcons.google)
-                              ],
-                            )),
-                      )
-                    ],
-                  );
-                } else if (state is LoginLoad) {
-                  return Center(
-                      child: SpinKitHourGlass(color: Colors.black, size: 30));
-                } else if (state is LoginGetPhone) {
-                  return Container(
-                    child: Column(
-                      children: [
-                        Text(
-                          "Enter Phone number to send alerts",
-                          style: GoogleFonts.montserrat(fontSize: 30),
+            child: BlocBuilder<LocalizeCubit, LocalizeState>(
+              builder: (context, localstate) {
+                return BlocConsumer<LoginCubit, LoginState>(
+                  listener: (context, state) {
+                    if (state is LoginSuccess) {
+                      context.read<AuthCubit>().login(state.email);
+                      context.read<HomeCubit>().load_home(state.email);
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Home(email: state.email)));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is LoginInitial) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Image.asset('assets/logo.png'),
+                          SizedBox(
+                            width: 210,
+                            child: ElevatedButton(
+                                onPressed: () async {
+                                  context
+                                      .read<LoginCubit>()
+                                      .signInWithGoogle(context: context);
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      Strings.map["sign_in_google"]![
+                                          localstate.index],
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                    Icon(FontAwesomeIcons.google)
+                                  ],
+                                )),
+                          )
+                        ],
+                      );
+                    } else if (state is LoginLoad) {
+                      return Center(
+                          child:
+                              SpinKitHourGlass(color: Colors.black, size: 30));
+                    } else if (state is LoginGetPhone) {
+                      return Container(
+                        child: Column(
+                          children: [
+                            Text(
+                              Strings.map["enter_phon"]![localstate.index],
+                              style: GoogleFonts.montserrat(fontSize: 30),
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            TextField(
+                              controller: tdc,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  if (tdc.text.length != 10)
+                                    showToast(Strings.map["invalid_phno"]![
+                                        localstate.index]);
+                                  else {
+                                    context
+                                        .read<LoginCubit>()
+                                        .setPhone(state.email, tdc.text);
+                                  }
+                                },
+                                child: Text(
+                                    Strings.map["add_phno"]![localstate.index]))
+                          ],
                         ),
-                        SizedBox(
-                          height: 30,
+                      );
+                    } else {
+                      return Center(
+                        child: Column(
+                          children: [
+                            Text(Strings
+                                .map["error_occured"]![localstate.index]),
+                            ElevatedButton(
+                                onPressed: () {
+                                  context.read<LoginCubit>().reload();
+                                },
+                                child: Text("Retry"))
+                          ],
                         ),
-                        TextField(
-                          controller: tdc,
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                            onPressed: () {
-                              if (tdc.text.length != 10)
-                                showToast("Invalid phone number");
-                              else {
-                                context
-                                    .read<LoginCubit>()
-                                    .setPhone(state.email, tdc.text);
-                              }
-                            },
-                            child: Text("Add Phone number"))
-                      ],
-                    ),
-                  );
-                } else {
-                  return Center(
-                    child: Column(
-                      children: [
-                        Text("there was an error"),
-                        ElevatedButton(
-                            onPressed: () {
-                              context.read<LoginCubit>().reload();
-                            },
-                            child: Text("Retry"))
-                      ],
-                    ),
-                  );
-                }
+                      );
+                    }
+                  },
+                );
               },
             ),
           ),
