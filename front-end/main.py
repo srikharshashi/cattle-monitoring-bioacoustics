@@ -2,11 +2,19 @@ import sounddevice as sd
 from scipy.io.wavfile import write
 import time
 import requests
+import sys
 
-urls = {
-  "cow" : "http://172.16.53.161:3000/upload-wave/GDYRjPzwQmX4cxzrMPjk/cow",
-  "hen" : "http://172.16.53.161:3000/upload-wave/Unq00NbzDk2Ip0IzzP17/hen"
-}
+if(len(sys.argv)!=3):
+  print("Usage python main.py cattle_type id")
+  sys.exit(1)
+
+breed=sys.argv[1]
+id=sys.argv[2]
+
+print(breed,id)
+
+url=  f"http://172.16.53.161:3000/upload-wave/{id}/{breed}"
+  
 
 file_paths = {
   "cow" : {
@@ -34,7 +42,7 @@ DangerSet = ["HFC" , "UNHEALTHY" , "DISTRESS"]
 def upload_file(filename):
     with open(filename, 'rb') as f:
         files = {'file': (filename, f)}
-        response = requests.post(urls['cow'], files=files , headers=headers)
+        response = requests.post(url, files=files , headers=headers)
         return response.text
 
 class DeciveController:
@@ -55,9 +63,10 @@ class DeciveController:
             write(f'{self.output_dir}/output{i}.wav', self.sample_rate, recording)
             print(f"Saved output{i}.wav")
             file_path = rf'{self.output_dir}/output{i}.wav'
-            upload_file(file_path)
+            res=upload_file(file_path)
+            print(res,end='\n')
             input("Enter to move : ")
     
 
-runner = DeciveController(cattle_type="cow" , cattleID="GDYRjPzwQmX4cxzrMPjk")
+runner = DeciveController(breed, id)
 runner.Run()

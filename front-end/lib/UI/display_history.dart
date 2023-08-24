@@ -1,3 +1,4 @@
+import 'package:cattleplus/UI/web_view.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -26,7 +27,7 @@ Future<List<HistoryObject>> fetchHistory(String documentId) async {
         .map<HistoryObject>((element) => HistoryObject(
             element['createdAt'].toDate() ?? "",
             element['predictionType'].toLowerCase() ?? "",
-            element['publicURL'] ?? " "))
+            element['publicUrl'] ?? ""))
         .toList();
     return historyList;
   } else {
@@ -65,6 +66,16 @@ class DisplayHistory extends StatelessWidget {
                 String date = "${dt.day}/${dt.month}/${dt.year}";
                 String time = "${dt.hour}:${dt.minute}:${dt.second}";
                 return ListTile(
+                  onTap: () {
+                    print(historyItem.publicURL);
+                    if (!historyItem.publicURL.isEmpty) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  WebView(URL: historyItem.publicURL)));
+                    }
+                  },
                   contentPadding:
                       EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   title: Row(

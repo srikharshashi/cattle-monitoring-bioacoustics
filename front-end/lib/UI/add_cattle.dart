@@ -77,7 +77,8 @@ class _AddCattleState extends State<AddCattle> {
                     controller: deviceIdC,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: Strings.map["enter_deviceid"]![localstate.index]),
+                        hintText:
+                            Strings.map["enter_deviceid"]![localstate.index]),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter some text';
@@ -141,10 +142,12 @@ class _AddCattleState extends State<AddCattle> {
                                 context.read<AddcattleCubit>().addCattle(
                                     widget.email,
                                     nameController.text,
-                                    selectedAnimal,deviceIdC.text);
+                                    selectedAnimal,
+                                    deviceIdC.text);
                               }
                             },
-                            child: Text(Strings.map["animal_select"]![localstate.index]));
+                            child: Text(
+                                Strings.map["add_cattle"]![localstate.index]));
                       }
                     },
                   ))
