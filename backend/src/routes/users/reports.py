@@ -50,7 +50,7 @@ def new_report(cattle_id , cattle_type):
         if "error" in update_cattle:
             return make_response(jsonify(uploaded="fail", file_id=None, error=str(update_cattle["error"])), 403)
         # return make_response(jsonify(test=update_cattle), 200)
-        return make_response(jsonify(uploaded="success", file_id=str(savedFile["file"]) , predictions=str(predictions["predictions"])), 200)
+        return make_response(jsonify(uploaded="success", file_id=str(savedFile["file"]) , external_url=update_cattle["url"] , cattleId=cattle_id , predictions=str(predictions["predictions"])), 200)
         
 
     except Exception as e:
