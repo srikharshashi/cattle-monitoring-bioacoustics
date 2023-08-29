@@ -93,6 +93,23 @@ This project aims to use BioAcoustics to learn the patterns of vocalizations of 
 
 ![image](https://github.com/srikharshashi/cattle-monioring-bioacoustics/assets/37980605/7fdbe8b7-6ef9-4198-ac28-d96ec7069157)
 
+
+## Authors
+
+- [Srikhar Shashi D](https://www.github.com/srikharshahsi) -- Team Leader and Flutter Developer
+- [Jayendra Madaram](https://github.com/jayendramadaram) -- Backend ENgineer
+- [Pranav Batchu]() -- Deep Learning and Audio Processing 
+- [Prabhah]() -- Audio Processing/Deep Learning/Flutter UI Developer
+
+## Tech Stack
+
+- Flutter for Frontend
+- Flask for backend Services
+- Cloud Firestore and Firebase Auth for DB and Auth
+- Firebase Storage for online services
+- Tensorflow ,Keras ,Librosa ,SciPy -- for Deep Learning and Audio Processing
+
+
 ## Datasets
 
 
