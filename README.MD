@@ -111,7 +111,7 @@ This project aims to use BioAcoustics to learn the patterns of vocalizations of 
 
 ## Featured at 
 
-This project was the result of a 24-hr hackathon consucted by T-Hub,The Nudge Foundation and Google where we bagged the first place amongst 270 teams nationwide and got featured on the news(Deccan Chronicles).
+This project was the result of a 24-hr hackathon conducted by T-Hub,The Nudge Foundation and Google where we bagged the first place amongst 270 teams nationwide and got featured on the news(Deccan Chronicles).
 
 <p align="center" width="100%" >
   <img src="https://github.com/srikharshashi/cattle-monioring-bioacoustics/assets/37980605/599a56a9-d7fc-4f42-a2e0-b589f1b7f07f" />
