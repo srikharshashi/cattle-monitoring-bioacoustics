@@ -93,6 +93,12 @@ This project aims to use BioAcoustics to learn the patterns of vocalizations of 
 
 ![image](https://github.com/srikharshashi/cattle-monioring-bioacoustics/assets/37980605/7fdbe8b7-6ef9-4198-ac28-d96ec7069157)
 
+## Demo Video
+
+<div align="center">
+  <a href="https://www.youtube.com/watch?v=lBWsUVvXhiE"><img src="https://img.youtube.com/vi/lBWsUVvXhiE/0.jpg" alt="Youtube Video"></a>
+</div>
+
 
 ## Authors
 
