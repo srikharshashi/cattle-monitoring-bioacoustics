@@ -129,6 +129,7 @@ This project was the result of a 24-hr hackathon conducted by T-Hub,The Nudge Fo
 
 - https://gitlab.com/is-annazam/bovinetalk/-/tree/main/Cattle%20sounds%20database%20(raw%20data)?ref_type=heads
 - https://data.mendeley.com/datasets/zp4nf2dxbh/1
+- https://www.kaggle.com/datasets/pcaackdataset/15-sec-splitted-chicken-distress-audio
 
 
 ## Related Work and References
