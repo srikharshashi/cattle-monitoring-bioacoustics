@@ -104,7 +104,7 @@ This project aims to use BioAcoustics to learn the patterns of vocalizations of 
 
 - [Srikhar Shashi D](https://www.github.com/srikharshahsi) -- Team Leader and Flutter Developer
 - [Jayendra Madaram](https://github.com/jayendramadaram) -- Backend ENgineer
-- [Pranav Batchu]() -- Deep Learning and Audio Processing 
+- [Pranav Batchu](https://github.com/batchu-29) -- Deep Learning and Audio Processing 
 - [Prabhah]() -- Audio Processing/Deep Learning/Flutter UI Developer
 
 ## Tech Stack
